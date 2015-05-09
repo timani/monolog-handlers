@@ -1,0 +1,6 @@
+name = New Relic Monolog Handler
+description = A New Relic handler for the Monolog Drupal module.
+dependencies[] = monolog 
+core = 7.x
+php = 5.3
+package = Development
