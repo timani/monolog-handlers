@@ -5,43 +5,18 @@
  * Monolog hook implementations for New Relic.
  */
 
- /**
- * Example loader callback.
- *
- * Loader callbacks instantiate the handler class.
- *
- * @param array $options
- *   The configuration options set for this handler.
- *
- * @return HandlerInterface
- *
- * @see hook_monolog_handler_info()
- */
-function newrelic_monolog_handler_loader($options) {
-  return new NewRelicHandler($options['level'], $options['bubble'], $options['app_name']);
-}
-
-## http://cgit.drupalcode.org/monolog/tree/monolog.monolog.inc
-
-/**
- * Implements hook_monolog_handler_path().
- */
-function newrelic_monolog_handler_path() {
-  return 'handlers';
-}
-
 /**
  * Implements hook_monolog_handler_info().
  */
 function newrelic_monolog_handler_info() {
   $handlers = array();
-  
+
   $handlers['newrelic'] = array(
     'label' => t('New Relic'),
     'description' => t('Logs records to New Relic using it\'s API.'),
     'group' => t('Alerts and emails'),
-    'default settings' => array( 
-      'app_name' => variable_get('site_name', 'Drupal'), 
+    'default settings' => array(
+      'app_name' => variable_get('site_name', 'Drupal'),
     ),
   );
 
@@ -49,30 +24,8 @@ function newrelic_monolog_handler_info() {
 }
 
 /**
- * Implements hook_default_monolog_profiles().
+ * Implements hook_monolog_handler_path().
  */
-function newrelic_default_monolog_profiles() {
-  $profiles = array(); 
-
-  $profile = new stdClass();
-  $profile->disabled = FALSE;
-  $profile->api_version = 1;
-  $profile->name = 'newrelic';
-  $profile->options = array(
-    // Should be Dev, Test, Live
-    'label' => 'New Relic',
-    'handlers' => array(
-      'newrelic' => array(
-        'handler' => 'newrelic',
-        'label' => 'New Relic', 
-        'app_name' => variable_get('site_name', 'Drupal'), 
-        'level' => 200,
-        'bubble' => 1,
-        'weight' => -50,
-      ),
-    ),
-  );
-  $profiles[$profile->name] = $profile;
-
-  return $profiles;
+function newrelic_monolog_handler_path() {
+  return 'handlers';
 }

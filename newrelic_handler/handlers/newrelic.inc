@@ -26,5 +26,6 @@ function monolog_newrelic_handler_settings(&$form, &$form_state, $profile, array
     '#type' => 'textfield',
     '#default_value' => $handler['app_name'],
     '#description' => t('The app_name for New Relic to monitor.'),
+    '#required' => TRUE,
   );
 }

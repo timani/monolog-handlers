@@ -5,43 +5,18 @@
  * Monolog hook implementations for Loggly.
  */
 
- /**
- * Example loader callback.
- *
- * Loader callbacks instantiate the handler class.
- *
- * @param array $options
- *   The configuration options set for this handler.
- *
- * @return HandlerInterface
- *
- * @see hook_monolog_handler_info()
- */
-function loggly_monolog_handler_loader($options) {
-  return new LogglyHandler($options['token'], $options['level'], $options['bubble']);
-}
-
-## http://cgit.drupalcode.org/monolog/tree/monolog.monolog.inc
-
-/**
- * Implements hook_monolog_handler_path().
- */
-function loggly_monolog_handler_path() {
-  return 'handlers';
-}
-
 /**
  * Implements hook_monolog_handler_info().
  */
 function loggly_monolog_handler_info() {
   $handlers = array();
-  
+
   $handlers['loggly'] = array(
     'label' => t('Loggly'),
     'description' => t('Logs records to Loggly using the HTTP API.'),
     'group' => t('Alerts and emails'), # @TODO should be in a different group
-    'default settings' => array( 
-      'token' => '', 
+    'default settings' => array(
+      'token' => '',
     ),
   );
 
@@ -49,30 +24,8 @@ function loggly_monolog_handler_info() {
 }
 
 /**
- * Implements hook_default_monolog_profiles().
+ * Implements hook_monolog_handler_path().
  */
-function loggly_default_monolog_profiles() {
-  $profiles = array(); 
-
-  $profile = new stdClass();
-  $profile->disabled = FALSE;
-  $profile->api_version = 1;
-  $profile->name = 'loggly';
-  $profile->options = array(
-    // Should be Dev, Test, Live
-    'label' => 'Loggly',
-    'handlers' => array(
-      'loggly' => array(
-        'handler' => 'loggly',
-        'label' => 'Loggly', 
-        'token' => '', 
-        'level' => 200,
-        'bubble' => 1,
-        'weight' => -50,
-      ),
-    ),
-  );
-  $profiles[$profile->name] = $profile;
-
-  return $profiles;
+function loggly_monolog_handler_path() {
+  return 'handlers';
 }

@@ -24,7 +24,8 @@ function monolog_loggly_handler_settings(&$form, &$form_state, $profile, array $
   $form['token'] = array(
     '#title' => t('API token'),
     '#type' => 'textfield',
-    '#default_value' => $handler['token'],
+    '#default_value' => trim($handler['token']),
     '#description' => t('The Loggly token for the application.'),
+    '#required' => TRUE,
   );
 }
